@@ -1,53 +1,78 @@
-#STRING NOTES
+"""STRINGS"""
 
-#Strings are immutable
+#Strings are immutable (i.e. they cannot be modified after creation)
 
 #Both " and ' work to denote strings
+onestring = 'string'
+twostring = "string"
 
+type(onestring) == type(twostring)
+
+#%%
 #Triple " and ' allow multiline strings
+multiline = """This just happens to be a striiiiiiii
+iiiiiiiiiiiiiiinnnnnnnnnnnnnnnnnnnnnn
+nnnnnnnnnnggggggggggggggggg"""
+print(multiline)
 
+#%%
 #\n is newline
 #\t is tab
+print("First Line\nSecond\t\tLine")
 
+#%%
 #+ is concatenation
+"Box" + "Car"
 
+#* is repetition
+"Box"*4
+
+#%%
 #Must use str() to treat non-strings as strings
 demand = 1
 #request = "Hello, I would like " + demand + " cookies"  <-- Error
-request = "Hello, I would like " + demand + " cookies"
+request = "Hello, I would like " + str(demand) + " cookies"
 
+#%%
 #Can index individual characters in a string
-"Hello"[0] == "H"
+print("Hello"[0])
 
 #Can index with negative numbers
-"Hello"[-1] == "o" #Last character
+print("Hello"[-1]) #Last character
 
 # o  l  l  e  H  e  l  l  o
 #-4 -3 -2 -1  0  1  2  3  4 
 
-#Raw strings ignore escape characters, this is very useful for Regular Expressions
+#%%
+#Raw strings ignore escape characters (i.e. '\'), this is very useful for Regular Expressions
 r"Open up C:\Python\fun.py" == "Open up C:\\Python\\fun.py"
 
+#%%
 #Slicing strings with [:]
-"Hello"[1:3] == "el" #Read as "From character 1, up to but not including character 3"
+print("Hello"[1:3]) #Read as "From character 1, up to but not including character 3"
+
 #Negative indexes work as well
-"Hello"[1:-1] == "ell"  #From character 1, up to but not including the last character
+print("Hello"[1:-1]) #From character 1, up to but not including the last character
+
 #Omitting an index indicates start at beginning / continue to end
-"Hello"[:3] == "Hel"
-"Hello"[4:] == "o"
+print("Hello"[:3])
+print("Hello"[4:])
 
+#%%
 #Giving an out-of-bounds index will still work
-"Hello"[1:25000] == "ello"
+"Hello"[1:25000]
 
+#%%
 #This makes it very simple to split a string into two parts:
 greeting = "Hello"
 aliengreeting = greeting[2:] + greeting[:2]
+print(aliengreeting)
 
+#%%
 """USEFUL STRING FUNCTIONS:
 
-lower()
-upper()
-strip() <-- trim
+lower(), upper()
+strip("chars") <-- trim leading/trailing instances of all characters in "chars".  strip() strips only whitespace
 isalpha(), isdigit(), isalnum(), isspace() <-- all chars are of specified type
 startswith("other"), endswith("other")
 find("other") <-- returns index of first occurrence or -1 if not found
@@ -58,45 +83,80 @@ format(args) <-- Fill in {}s with args
 
 """
 
+#%%
 example = "Alfred R. Penningtonsmith"
 
-example.lower() == "alfred r. penningtonsmith"
-"Hello".upper() == "HELLO"
+print(example.lower())
+print("Hello".upper())
 
+#%%
 
-"    W hy not  ? ".strip() == "W hy not  ?"
-"    W hy not  ? ".strip(" ?")
+print("    W hy not  ? ".strip())
+print("    W hy not  ? ".strip(" ?"))
 
+#%%
+#These iswhatever() functions can be used for input validation
 "123".isdigit()
 "12ab3".isalpha()
 "12ab3".isalnum()
 "\t  \n".isspace()
 
-example.startswith("smith")
-example.endswith("smith")
+#%%
+example = "Alfred R. Penningtonsmith"
 
-example.find("fred") == 2
-example.find("Fred") == -1
+print(example.startswith("smith"))
+print(example.endswith("smith"))
 
-example.replace("n","m") == "Alfred R. Pemmimgtomsmith"
+#%%
+print(example.find("fred"))
+print(example.find("Fred"))
 
-example.split() == ["Alfred","R.","Penningtonsmith"]
-example.split(".") == ["Alfred R"," Penningtonsmith"] #Whitespace is kept!
+#%%
+print(example.replace("n","m"))
 
-words = ["Never","Say","Never"]
-" ".join(words)
-" Ever ".join(words)
+#%%
+print(example.split())
+print(example.split(".")) #Whitespace is kept!  Now we are just splitting on '.'
 
-orderitems = [("Toothpaste",)]
+#%%
+words = ["One","Two","Red","Blue","!"]
+print(" ".join(words))
+print(" Fish ".join(words))
 
+#%%
+import random
+words1 = ["Sir","Ma'am","Son","Panda","Kitty"]
+words2 = ["day","life","meal","trip","rest","trip to the Moon","flight"]
 
-#Exercises:
+"Goodbye {}, have a nice {}!".format(words1[int(random.random()*len(words1))],words2[int(random.random()*len(words2))])
+
+#%%
+orderitems = [("Toothpaste",3,2.49),("Toothbrush",1,4.00),("Floss",2,1.20)]
+
+for item in orderitems:
+    print("{}x {:<12} @ ${:0<4.2} per = ${:0<4.2}".format(item[1], item[0], item[2], item[1]*item[2]))
+
+#%%
+
+"""STRING EXERCISES"""
+#Use find to print out just the TLD (Top-Level Domain, e.g. 'com') for each email in this list of email addresses
+#You can assume that all TLDs are just three letters
+#For bonus points, do it in a for loop and only write the code once!
+emails = ["jb123@au.edu Johnny B", "ShootToBill@aol.com Bill Turner","xX_TigerKittyMeow_Xx@aspca.org Veronica Katz","FlawedRibbon@msn.com Ricky Sticky"]
+
+#%%
 #Use string slicing and repetition to turn "Missing Pie" into "Mississippi"
 startword = "Missing Pie"
 finishword = "Replace me with string functions!"
 finishword == "Mississippi"
 
-#Define a function which will take in a string and return a "crazy" string by randomly capitalizing letters
+#%%
+#Define a function which will take in a string and return a "crazy" string by randomly capitalizing letters and inserting a random amount of space between words
 #Example Input:  "Hello!"
 #Example Output: "hELlo!"
+#Hint random.random() gives you the same thing as the Excel rand() function!
+
+
+#Using your crazy string function, convert this seemingly innocuous sentence into a ransom letter and send it to your friend:
+letter = "Have you seen your cat recently?  I wonder where it could have run off to!  I'm sure it will turn up... somewhere."
 
