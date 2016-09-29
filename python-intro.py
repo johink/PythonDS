@@ -45,7 +45,11 @@ False and (False or True) or False and True #But parentheses work here as well
 "This is " + "a string" # addition concatenates strings
 "This is " * 2 + "a string" # multiplication duplicates strings
 
-"string"[0] #Can slice strings.  Python indices start at ZERO (not one)!
+"string"[0] #You can slice strings, along with many other things.  
+
+"""IMPORTANT NOTE:
+                   Python indices start at ZERO (not one)!
+"""
 
 len("string") #len can find the length of many things, including strings
 
@@ -55,8 +59,11 @@ str(3.14159)
 "That's " + str(None) + " of your business!"
 
 #Whether you use " or ' determines if you need to escape or not
+#Printing quotes (") when the string is denoted by quotes (") requires escaping (\)
 print('"No, I will not do that," Jake countered.')
 print("\"No, I will not do that,\" Jake countered.")
+
+#Printing an apostrophe (') when the string is denoted by quotes (") is perfectly fine
 print("This just won't do...")
 print('This just won\'t do...')
 
@@ -85,7 +92,7 @@ some_num += 2 #These are shortcut operators, instead of "some_num = some_num + 2
 # also try -= *= /= //= and **=
 
 #Variables must be defined in some way before accessing their value
-# is_not_defined * 2 #Throws an error
+# is_not_defined * 2 #This will throw an error
 
 #Remember that you can always find the type of a variable or literal with type()
 type("Hello")

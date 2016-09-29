@@ -10,6 +10,7 @@ myset = {}
 print("Type of 'myset = {{}}' is {}".format(type(myset)))
 
 #%%
+#Set Operators:
 
 setA = set([1,3,5,2,2,2,1,9])
 setB = {1,3,3,3,5,7,9}
@@ -104,5 +105,13 @@ print("We should get rid of: {}".format(set(activities) - set(seen_it)))
 #you don't really care about working out, he has annotated which body part each exercise is for
 
 workout = [("chest",("Incline Bench",8,135)),("triceps",("Skull-Crushers",12,35)),
-           ("chest",("Incline Bench",6,215)),("triceps",("Skull-Crushers",6,55)),("shoulders")]
+           ("chest",("Incline Bench",6,225)),("triceps",("Skull-Crushers",6,55)),
+           ("shoulders",("Shoulder Press",8,30)),("chest",("Dumbbell Flys",12,15)),
+           ("shoulders",("Shoulder Press",5,60)),("chest",("Dumbbell Flys",16,25)),
+           ("triceps",("Dips",8,45)),("triceps",("Triceps Extension",8,35)),
+           ("triceps",("Dips",14,45)),("triceps",("Triceps Extension",6,75)),
+           ("chest",("Bench Press",6,315)),("chest",("Dumbbell Flys",7,35)),
+           ("chest",("Bench Press",1,405)),("chest",("Dumbbell Flys",2,85))]
+           
+meow = "Meow"
 
