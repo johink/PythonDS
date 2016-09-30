@@ -58,11 +58,11 @@ mydict.pop("FavNums")
 print(mydict)
 
 #%%
-"""EXERCISES"""
+"""DICTIONARY EXERCISES"""
 #Remember the JSON example from Wikipedia?
 
 """ JSON example from Wikipedia
-hello = {
+{
   "firstName": "John",
   "lastName": "Smith",
   "isAlive": true,
@@ -93,7 +93,7 @@ hello = {
 """
 
 #Try to assign this JSON to a dictionary.  It won't work.  Can you figure out why?
-#JSON stands for JavaScript Object Notation, so the syntax is from JavaScript!
+#Hint: JSON stands for JavaScript Object Notation, so the syntax is from JavaScript!
 
 #Once you have it in proper Python syntax, do the following:
 #John Smith just had his birthday today; please update his age accordingly

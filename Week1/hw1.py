@@ -14,24 +14,28 @@ both the name of the company and the position for which you are qualified for
 
 my_skills = ["Excel","SQL","R","Python","Visualization","Modeling","Statistics"]
 
-jobs = [{"Company":"Google",
+jobs = [{"Company":"Stewgle",
          "Position":"Data Scientist",
          "Location":"San Francisco, CA",
          "Requires":["Python","Visualization","Hadoop","SQL"]},
-        {"Company":"Uber",
+        {"Company":"Super",
          "Position":"Business Analyst",
          "Location":"San Francisco, CA",
          "Requires":["Excel","SQL","R","Modeling"]},
         {"Company":"Ricky's Pawn & Auto",
          "Position":"Chief Information Officer",
          "Location":"Winston-Salem, NC",
-         "Requires":["Excel","Street Smarts"]}]
+         "Requires":["Excel","Street Smarts"]},
+        {"Company":"KRAS",
+         "Position":"Consultant",
+         "Location":"Raleigh, NC",
+         "Requires":["SAS","Excel","SQL","Modeling","Statistics"]}]
 
 def qualified(jobs, skills):
     results = [] #Add the jobs you qualify for to results as a tuple (company, position)
     return results
 
-assert qualified(jobs, my_skills) == [("Uber","Business Analyst")]
+assert qualified(jobs, my_skills) == [("Uber","Business Analyst"),("KRAS","Consultant")]
 
 print("If you get here, you did it!")
 

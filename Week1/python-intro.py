@@ -78,7 +78,7 @@ None is None
 """TRUTHY/FALSEY"""
 #Python uses the concept of "truthiness" which exists in many programming languages
 #Everything that is empty or zero is considered "falsey"
-alist = ["hello",0,5.2,False,True,"",None] #Which are truthy?
+alist = ["hello",0,5.2,{},False,True,"",None,[]] #Which are truthy?
 [x for x in alist if x] #Only truthy values remain
 
 
