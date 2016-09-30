@@ -99,10 +99,9 @@ print("We should get rid of: {}".format(set(activities) - set(seen_it)))
 #%%
 """SET EXERCISES"""
 #Your friend really likes to work out (he does a lot of sets), and was wondering if you could write him a function to help him
-#make sure that he's doing enough exercises for each body part.  Luckily, he takes detailed notes of each workout he completes,
-#and he has provided these to you.  Unfortunately, he records them in a "stream of consciousness" style, meaning that he records
-#each exercise right as he does them.  An exercise looks like this:  (Exercise_name, reps, weight).  Since your friend knows
-#you don't really care about working out, he has annotated which body part each exercise is for
+#make sure that he's doing enough different exercises for each body part.  Luckily, he takes detailed notes of each workout he completes,
+#and he has provided these to you.  An exercise entry looks like this:  (Exercise_name, reps, weight).  Since your friend knows
+#you don't really care about working out, he has annotated which body part each exercise is for by putting a label in front of the exercise
 
 workout = [("chest",("Incline Bench",8,135)),("triceps",("Skull-Crushers",12,35)),
            ("chest",("Incline Bench",6,225)),("triceps",("Skull-Crushers",6,55)),
@@ -113,5 +112,7 @@ workout = [("chest",("Incline Bench",8,135)),("triceps",("Skull-Crushers",12,35)
            ("chest",("Bench Press",6,315)),("chest",("Dumbbell Flys",7,35)),
            ("chest",("Bench Press",1,405)),("chest",("Dumbbell Flys",2,85))]
            
-meow = "Meow"
+#Write a function which will take in your friend's exercise routine, and spit back out a dictionary which has muscle groups for keys
+#And a set of related exercises as values
+#Example:  {"chest":{"Exercise A","Exercise B"},"legs":"Exercise C"}           
 
