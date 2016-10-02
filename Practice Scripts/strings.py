@@ -21,6 +21,16 @@ print(multiline)
 print("First Line\nSecond\t\tLine")
 
 #%%
+#Whether you use " or ' determines if you need to escape or not
+#Printing quotes (") when the string is denoted by quotes (") requires escaping (\)
+print('"No, I will not do that," Jake countered.')
+print("\"No, I will not do that,\" Jake countered.")
+
+#Printing an apostrophe (') when the string is denoted by quotes (") is perfectly fine
+print("This just won't do...")
+print('This just won\'t do...')
+
+#%%
 #+ is concatenation
 "Box" + "Car"
 

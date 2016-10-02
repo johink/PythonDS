@@ -39,7 +39,7 @@ pd.Series([1,2,3,4]) * pd.Series([1,2,3]) # Python won't repeat the smaller vect
 # In Python, if the vectors are not the same size, the vector WON'T repeat!
 pd.Series([1,2,3,4]) + pd.Series([1,2])  # Two NaNs
 
-# use sequence to create a vector with a particular pattern
+# use range to create a vector with a particular pattern
 pd.Series(range(2,10,2))
 
 ### EXERCISE ###
@@ -162,24 +162,25 @@ dat = pd.DataFrame({"id":[1,2,3,4], "cond":["A","B","C","D"]})
 #Since Python won't repeat shorter vectors, this results in an error
 # dat = pd.DataFrame({"id":[1,2,3,4], "cond":["A","B"]})
 
-#boolean row index
+#boolean row slicing
 dat[dat.id > 2]
 
-#column index (all rows)
+#column label slicing (all rows)
 dat["cond"]
 
-#row index (all columns)
+#row index slicing (all columns)
 dat[0:3]
 
 #Must use a property to slice both rows and columns
-# .loc uses row and column names
+# .loc uses row and column labels
 dat.loc[1:2,"id"]  #Note that .loc is *inclusive* on both sides, i.e. [start,stop]
 
 # .iloc uses row and column indexes, this behaves like normal Python slicing
-dat.iloc[1:2,1]
+#Must use ":" if you want all rows, you can't just leave it blank like in R
+dat.iloc[:,1]
 
 #There are also extremely fast properties to access just 1 element in the DataFrame
-# .at uses row and column names
+# .at uses row and column labels
 dat.at[1,"id"]
 
 # .iat uses row and column indexes

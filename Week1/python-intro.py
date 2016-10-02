@@ -58,18 +58,9 @@ str(True)
 str(3.14159)
 "That's " + str(None) + " of your business!"
 
-#Whether you use " or ' determines if you need to escape or not
-#Printing quotes (") when the string is denoted by quotes (") requires escaping (\)
-print('"No, I will not do that," Jake countered.')
-print("\"No, I will not do that,\" Jake countered.")
-
-#Printing an apostrophe (') when the string is denoted by quotes (") is perfectly fine
-print("This just won't do...")
-print('This just won\'t do...')
-
 
 """NONE"""
-#None is kind of like NULL in a database
+#None is like NULL in a database
 #Use the "is" operator to compare None, as well as other objects
 5 is None
 None is None
@@ -96,14 +87,16 @@ some_num += 2 #These are shortcut operators, instead of "some_num = some_num + 2
 
 #Remember that you can always find the type of a variable or literal with type()
 type("Hello")
+type(3.14)
 type(True)
 type(None)
 type(some_num)
 
 
+
 """BASIC DATA STRUCTURES"""
 """LISTS"""
-#Lists are a relation of one or more elements.  They are always kept in the order you give them
+#Lists are a relation of one or more elements.  The elements are always kept in the order you list them
 courses = ["Data Visualization","Analytics Practicum","Data Management","Predictive Modeling","Analytics in the Bedroom"]
 digits_of_pi = [3,1,4,1,5,9]
 
@@ -155,15 +148,21 @@ print(str(qty) + "x " + item + " @ $" + str(unit_price) + " per")
 #Keys can be any atomic data type, but they are generally strings
 #Values can be literally anything, including other dictionaries!
 John = {"nickname":"Johnny B","age":12,"cool?":False,"likes":["Trampoline Park","Python","Ping Pong"]}
+
+#Slicing with a key will give you back the value associated with it!
 John["nickname"]
 John["likes"]
+#If the value can also be sliced, feel free to slice again
 John["likes"][1]
 
 Chase = {'nickname':'High-Speed','age':14,'cool?':True,'likes':['Ping Pong','SAS','Trampoline Park']}
 Martha = {"nickname":"Top Dawson",'age':17,"cool?":True,"likes":["R",'Duke Energy',"Probably Cats?"]}
 
+#Now we have a list of dictionaries
 students = [John,Chase,Martha] #Note how the order of the keys has been changed
 
+#These are list comprehensions to show you how easy it is to slice lists & dictionaries
+#We will cover list comprehensions in the "Advanced Python Programming" section
 [student for student in students if student["cool?"]]
 [student["age"] for student in students if "Ping Pong" in student["likes"]]
 
@@ -203,10 +202,11 @@ students = [John,Chase,Martha] #Note how the order of the keys has been changed
 """
 
 
-"""BASIC CONTROL FLOW STATEMENTS"""
-"""IF"""
-#If works the same as R, but "else if" has been shortened to "elif"
 #%%
+"""CONTROL FLOW STATEMENTS"""
+"""IF"""
+
+#If works the same as R, but "else if" has been shortened to "elif"
 drink_order = "Coke"
 if drink_order == "water":
     print("This one's on the house, sweetheart!")
@@ -214,11 +214,14 @@ elif drink_order == "beer":
     print("I'm going to need to see some ID, mister.")
 else:
     print("We don't have any " + drink_order + ".")
+    
 #%%
-#Multiple commands can be placed inside of an if/elif/else block by just keeping the same indentation
 excited_for_school = True
 python_points = 0
+
 #%%
+
+#Multiple commands can be placed inside of an if/elif/else block by just keeping the same indentation
 if excited_for_school:
     print("You feel inspired to go to school; you gain five Python points!")
     python_points += 5
@@ -226,10 +229,18 @@ if excited_for_school:
     excited_for_school = False
 else:
     print("You feel drained, so you watch some Netflix and take a nap.")
+
+
+    #The extra space doesn't mean anything.  As long as the indentation is the same,
+    #the statements below belong to the else: statement
     print("What a great rest!  You feel ready to learn everything now.")
     excited_for_school = True
+    
+#Note how this print function always runs because it's not indented like the rest
 print("Current Python points: " + str(python_points))
+
 #%%
+
 #In addition to controlling program flow, if can also be used in an expression:
 num_pizzas = 8
 enough_pizza = "Yes" if num_pizzas >= 10 else "No"
@@ -241,6 +252,7 @@ if num_pizzas >= 10:
 else:
     enough_pizza = "No"
 enough_pizza
+
 #%%
 
 
@@ -250,6 +262,7 @@ i = 0
 while i < 5:
     print(i)
     i += 1
+
 #%%
 #Care is required with while loops, because if they are improperly specified, they can run forever
 #For example, if we forgot to add one to i in the previous loop, it would forever print the value 0
@@ -258,6 +271,7 @@ i = 0
 while i < 5:
     print(i)
 """
+
 #%%
 #While loops are useful when the number of iterations is not well-defined
 #Here we will roll a die until we get a 6
@@ -266,6 +280,7 @@ dieroll = 0
 while dieroll != 6:
     dieroll = random.randint(1,6)
     print("You rolled a " + str(dieroll) + "!")
+
 #%%    
     
     
@@ -277,16 +292,19 @@ Chase = {'nickname':'High-Speed','age':14,'cool?':True,'likes':['Ping Pong','SAS
 Martha = {"nickname":"Top Dawson",'age':17,"cool?":True,"likes":["R",'Duke Energy',"Probably Cats?"]}
 students = [John,Chase,Martha]
 
+#%%
 #Print likes for each student
 for student in students:
     print(student["likes"])
-    
+   
+#%%   
 #Find everything that is liked by at least one student
 liked = set()
 for does_not_matter in students:
     liked.update(does_not_matter["likes"])
 print(liked)
 
+#%%
 #Find the average student age
 total_age = 0
 num_students = 0
@@ -299,15 +317,18 @@ print("Average age is " + str(total_age/num_students))
 #To iterate over a range of numbers
 for i in range(5):
     print(i)
-    
+
+#%%
 for does_not_matter in range(len(students)):
     print("The " + str(does_not_matter) + " element in the students collection has a nickname of " + students[does_not_matter]["nickname"])
+
 #%%
 
 
 """FUNCTIONS"""
 #Functions make your life easier (trust me!) 
 #by preventing you from having to retype the same thing over and over again
+#Just like fors and ifs, all of the indented code below the def xxx: statement belongs to the function
 def conf_int(data, clevel = .9):
     from scipy import stats
     import numpy as np
