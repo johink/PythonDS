@@ -19,6 +19,8 @@ class StdOutListener(StreamListener):
 
     def on_error(self, status):
         print(status)
+        if status == 420:
+            return False
 
 
 if __name__ == '__main__':
@@ -30,4 +32,4 @@ if __name__ == '__main__':
     stream = Stream(auth, l)
 
     #This line filter Twitter Streams to capture data by the keywords: 'python', 'javascript', 'ruby'
-    stream.filter(track=['machine learning'])
+    stream.filter(track=['good gravy'])

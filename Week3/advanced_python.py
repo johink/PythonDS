@@ -53,7 +53,7 @@ for student in filter(lambda x: x["age"] >=13, students):
 #pandas implements filter-like functionality with its R-like slicing:    
 import pandas as pd
 mydf = pd.DataFrame(students)
-mydf[mydf["age"] >= 13]
+mydf.loc[mydf["age"] >= 13,"likes"]
     
     
 """ITERABLES"""
@@ -73,13 +73,38 @@ list(big_iterable)
 
 #%%
 """MAP"""
+#Map applies a function across a list of inputs in parallel
+#This is very useful if your data is kind of split up
+#For example, calculating a weighted average
+x = [5,10,15,20,25,30]
+p_x = [.1,.3,.2,.05,.25,.1]
+
+sum(map(lambda one, two: one * two, x, p_x))
+
+#List comprehensions would not work for this!
+#This is because list comprehensions are basically a nested for loop
+sum([one * two for one in x for two in p_x])
+
+#However, you could use zip() to turn the separate lists into a list of tuples:
+sum([one * two for one, two in zip(x, p_x)])
 
 
-
+#%%
 """REDUCE"""
+#Reduce has been moved to the "functools" library, but understanding it will
+#help your R coding.  Reduce applies a binary function to the first two 
+#elements in a list, and keeps going until there's only one item left
+from functools import reduce
+alist = [55,21,12,100,15,88,71]
+
+#The most common "reduce" is sum!
+reduce(lambda x, y: x + y, alist)
+
+#Find the highest odd number in a list
+reduce(lambda x, y: y if y % 2 == 1 and y > x else x, alist, 0)
 
 
-
+#%%
 """LIST COMPREHENSIONS"""
 
 
