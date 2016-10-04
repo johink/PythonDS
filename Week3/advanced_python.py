@@ -106,7 +106,45 @@ reduce(lambda x, y: y if y % 2 == 1 and y > x else x, alist, 0)
 
 #%%
 """LIST COMPREHENSIONS"""
+#List comprehensions have been widely embraced by the Python community.
+#They are basically a way to do a for loop in a nice, convenient syntax
 
+words = ["how","now","brown","cow"]
+more_words = ["where","stare","fair","chair"]
+#Get only the first letter of each word in the list
+[word[0] for word in words]
+
+#Return all words that are longer than 4 letters
+[word for word in words if len(word) > 4]
+
+#Notice how this returns the Cartesian product of the two lists:
+[word1 + " " + word2 for word1 in words for word2 in more_words]
+
+#This is because the above comprehension is essentially equivalent to the following:
+for word1 in words:
+    for word2 in more_words:
+        word1 + " " + word2
+        
+#If a Cartesian product isn't what you wanted, remember that you can zip two or more lists together:
+[word1 + " " + word2 for word1, word2 in zip(words, more_words)]
+
+#You can also use a dictionary comprehension, but make sure the keys you're creating are unique!
+unique_ids = [100,101,102,103]
+names = ["Billy","Bobby","Bally","Sally"]
+{key:value for key in unique_ids for value in names} #What happened?
+
+#Here we go
+{key:value for key, value in zip(unique_ids,names)}
+
+#Finally, if you are dealing with really large datasets where you don't want to have the entire
+#object in memory at once, you can use a generator comprehension instead:
+(word1 + " " + word2 for word1, word2 in zip(words, more_words))
+
+#Just like the iterables above, these generators must be iterated through using a for loop, or
+#explicitly converted into a list using list()
+
+#How would you find all the Pythagorean triples (a**2 + b**2 = c**2) using only the numbers 1-25?
+[(a,b,c) for a in range(1,26) for b in range(1,26) for c in range(1,26) if a**2 + b**2 == c**2 and a <= b]
 
 #%%
 """QUICKSORT"""
