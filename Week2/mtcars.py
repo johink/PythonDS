@@ -6,13 +6,16 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D #Axes3D allows us to choose "3d" as a projection type
 
 #There are different styles available:
-#matplotlib.style.use("ggplot")
+matplotlib.style.use("ggplot")
 
 #Load the dataset
-mydf = pd.read_csv("mtcars.csv")
+mydf = pd.read_csv("week2/mtcars.csv")
 
 #Check out the first six rows
 mydf.head()
+
+#inline graphics appear "in-line" in the IPython window
+%matplotlib inline
 
 #%%
 #You can easily make histograms and 2d plots with pandas:
@@ -46,6 +49,9 @@ mydf[["mpg","hp","cyl"]].plot.box()
 #%%
 #pandas is convenient, but can't really handle 3d plots
 #Luckily, we have matplotlib
+
+#qt makes graphics appear in a separate window
+%matplotlib qt
 
 #First, we create a new figure
 fig = plt.figure(1)

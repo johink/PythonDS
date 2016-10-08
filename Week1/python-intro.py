@@ -9,6 +9,9 @@
 2 ** 3 #Exponentiation is **, not ^
 2 ^ 3 #I told you this wouldn't work!
 
+2.2 * 2 #Numbers with decimals are floating-point
+2.0 + 15
+
 
 """BOOLEAN VALUES"""
 True #Note the capital T
@@ -20,8 +23,8 @@ True and False
 True and not False
 
 #By default, Python evaluates not, then and, then or
-False and False or True or False and True 
-False and (False or True) or False and True #But parentheses work here as well
+False and False or True 
+False and (False or True) #But parentheses work here as well
 
 #You can also use integers with boolean operators
 5 or 0
@@ -57,6 +60,14 @@ len("string") #len can find the length of many things, including strings
 str(True)
 str(3.14159)
 "That's " + str(None) + " of your business!"
+
+
+"""CHANGING TYPES"""
+int(3.5)
+str(True)
+float("5.323")
+bool(1)
+bool("False") #Is this what you expect?
 
 
 """NONE"""
