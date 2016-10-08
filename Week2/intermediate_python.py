@@ -6,6 +6,13 @@
 
 #When you use a variable, Python will first look for it in the Local environment,
 #then the Global environment, and finally the Built-in environment
+import pandas as pd #pandas' content is now scoped at the Built-in level
+from pandas import Series #Series is now scoped at the Global level
+
+Series = "Hello" #We have masked pandas' version of Series
+
+type(Series)
+type(pd.Series) #We can still provide the namespace to specify which "Series" we're looking for
 
 #If your variable isn't found in any environment, an error occurs:
 print(candycane)
@@ -61,7 +68,7 @@ def fib(x):
         return fib(x-1) + fib(x-2)
 
 for x in range(1,10):
-    print("Number {} in the Fibonnachi Sequence is {}".format(x,fib(x)))
+    print("Number {} in the Fibonacci Sequence is {}".format(x,fib(x)))
 
 #%%
     
@@ -111,12 +118,13 @@ while invalid:
 #Sometimes you'd like to differentiate between exceptions
 #For example:
 
-while True:
+invalid = True
+while invalid:
     try:
         x = float(input("Please enter a number: "))
         y = float(input("Please enter a second number: "))
         print ("{} / {} = {}".format(x,y,x/y))
-        break;
+        invalid = False;
     except ZeroDivisionError:
         print("The second number can't be zero!  Please try again.")
     except ValueError as e:
@@ -128,8 +136,8 @@ while True:
 #try, except, finally is so common that the "with" statement was used to simplify
 #certain access patterns
         
-with open("readme.md") as pic:
-    for line in pic:
+with open("readme.md") as file:
+    for line in file:
         print(line)
         
 #Notice that the variable "line" still exists, but the file connection "pic" is totally gone
@@ -139,12 +147,16 @@ with open("readme.md") as pic:
 """IMPLEMENT MERGE SORT"""
 
 #Merge sort is a recursive sorting algorithm that operates in n log n time.
-#Merge sort operates on the fact that it is easier to sort a bunch of tiny lists
+#Merge sort works on the fact that it is easier to sort a bunch of tiny lists
 #Rather than sorting one giant list
 #Base case:  1 element list is automatically sorted
 #Step case:  We will split the list in half at each point, calling merge sort on both halves,
 #and then combining the returned sorted sublists
+alist = [5,2,55,1,99,87,23,41,1]
 
 def merge_sort(x):
     
     return "?"
+    
+    
+merge_sort(alist) == sorted(alist)

@@ -26,6 +26,39 @@
 
 #%%
 
+"""FUNCTIONS WHICH RETURN FUNCTIONS"""
+#Here we'll define a function that takes a power and returns a function which will
+#raise anything passed to it the the power we chose
+def powerhouse(power):
+    return lambda base: base**power
+
+square = powerhouse(2)
+square(13)
+square(8)
+
+#%%
+#Even though 'power' should be forgotten now (it's out of scope), it can still be accessed
+#This is called a 'closure' in functional programming.
+#Closures are a way for functions to "remember" things.
+#Here is a closure which remembers how many times it is called:
+def timer(name):
+    x = 0
+    def temp():
+        x <- x + 1
+        print("Timer {} now has value {}".format(name, x))
+    return temp
+
+tick = timer(1)
+tick()    
+tick()
+tock = timer(2)
+tock()
+tick()
+tick()
+tock()
+
+#%%
+
 """FILTER"""
 #Filter takes a function which returns True/False and filters an iterable based upon the Trues/Falses
 #A very common filter function is None, which acts as an identity function and filters out falsey values

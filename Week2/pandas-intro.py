@@ -29,8 +29,8 @@ compare the content and better see the similarities and differences!
 import pandas as pd
 
 pd.Series([1,2,2,2])
-# vector addition and multiplication
 
+# vector addition and multiplication
 pd.Series([1,2,3,4]) + pd.Series([1,2,3,2])
 
 pd.Series([1,2,3,4]) * pd.Series([1,2,3,2]) # individual, element-wise multiplication
@@ -49,7 +49,7 @@ pd.Series(range(2,10,2))
 # Create a vector with two numbers: 4,56040.
 
 
-# Add the two vectors together. 
+# Add the two vectors together. Is this the same result as you would get in R?
 
 
 # Create a sequence from 0 - 100, counting by 10.
