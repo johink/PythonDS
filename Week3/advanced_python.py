@@ -39,13 +39,36 @@ square(8)
 #%%
 #Even though 'power' should be forgotten now (it's out of scope), it can still be accessed
 #This is called a 'closure' in functional programming.
-#Closures are a way for functions to "remember" things.
+#Closures are a way for functions to "remember" things that would usually be deleted.
 #Here is a closure which remembers how many times it is called:
 def timer(name):
     x = 0
     def temp():
-        x <- x + 1
+        nonlocal x #The nonlocal keyword says to find x in a scope other than local and global
+        x += 1
         print("Timer {} now has value {}".format(name, x))
+        return x
+    return temp
+
+tick = timer(1)
+tick()    
+tick()
+tock = timer(2)
+tock()
+tick()
+tick()
+tock()
+
+#%%
+#What would happen if we used a global variable with the global keyword, 
+#instead of an enclosure with the nonlocal keyword?
+x = 0
+def timer(name):
+    def temp():
+        global x #The global keyword says to find x in the global scope
+        x += 1
+        print("Timer {} now has value {}".format(name, x))
+        return x
     return temp
 
 tick = timer(1)
@@ -72,6 +95,7 @@ print(filter(None, alist))
 #If you want a list, use list()
 print(list(filter(None, alist)))
 
+#%%
 #The same is true for dictionaries
 John = {"nickname":"Johnny B","age":12,"cool?":False,"likes":["Trampoline Park","Python","Ping Pong"]}
 Chase = {'nickname':'High-Speed','age':14,'cool?':True,'likes':['Ping Pong','SAS','Trampoline Park']}
@@ -83,12 +107,17 @@ print(filter(lambda x: x["age"] >=13,students))
 for student in filter(lambda x: x["age"] >=13, students):
     print(student["likes"])
     
+for student in filter(lambda x: "Ping Pong" in x["likes"]):
+    student["cool?"] = True
+    
+#%%    
 #pandas implements filter-like functionality with its R-like slicing:    
 import pandas as pd
 mydf = pd.DataFrame(students)
 mydf.loc[mydf["age"] >= 13,"likes"]
     
     
+#%%
 """ITERABLES"""
 #We haven't really discussed iterables before, but they're important
 #Iterables are much more memory efficient than creating an entire list or dictionary
@@ -103,6 +132,35 @@ list(big_iterable)
 
 #Python's support of iterators means you can deal with massive amounts of data without
 #running out of memory
+
+#%%
+#You can create your own iterables using the "yield" keyword.
+#Let's recreate the timer examples above using generators:
+
+def counter_generator(name):
+    count = 0
+    while True:
+        count += 1
+        print("Timer {} now has value {}".format(name, count))
+        yield count #Note the yield keyword.  Yield says to pause the function here, whereas return ends the function completely
+        
+tick = counter_generator(1)
+tock = counter_generator(2)
+
+next(tick) #The next() function is used to iterate through an iterable
+next(tick)
+next(tock)
+next(tick)
+next(tick)
+next(tock)
+
+#%%
+#You can make collections into iterators if you want:
+nums = iter([17,21,2,55,"HI :)"])
+type(nums)
+
+#This can cause an error if you run out of numbers, so you're better off using a for loop
+print(next(nums)) 
 
 #%%
 """MAP"""
@@ -121,21 +179,45 @@ sum([one * two for one in x for two in p_x])
 #However, you could use zip() to turn the separate lists into a list of tuples:
 sum([one * two for one, two in zip(x, p_x)])
 
+#help your R coding.  Reduce applies a binary function to the first two 
 
 #%%
 """REDUCE"""
 #Reduce has been moved to the "functools" library, but understanding it will
-#help your R coding.  Reduce applies a binary function to the first two 
 #elements in a list, and keeps going until there's only one item left
 from functools import reduce
 alist = [55,21,12,100,15,88,71]
-
+wordlist = ["Hi","Hey","Yo","Reduce is cool"]
 #The most common "reduce" is sum!
 reduce(lambda x, y: x + y, alist)
 
 #Find the highest odd number in a list
 reduce(lambda x, y: y if y % 2 == 1 and y > x else x, alist, 0)
 
+#Find the total length of all words in a list
+reduce(lambda x, y: x + len(y), wordlist, 0)
+
+#%%
+#These tools are very powerful when combined together
+#For example, let's say you wanted to find all the things that everybody likes
+John = {"nickname":"Johnny B","age":12,"cool?":False,"likes":["Trampoline Park","Python","Ping Pong"]}
+Chase = {'nickname':'High-Speed','age':14,'cool?':True,'likes':['Ping Pong','SAS','Trampoline Park']}
+Martha = {"nickname":"Top Dawson",'age':17,"cool?":True,"likes":["R",'Duke Energy',"Probably Cats?","Ping Pong"]}
+students = [John,Chase,Martha]
+
+#First, we will use map to turn each student dictionary into a set of likes
+likes = map(lambda x: set(x["likes"]), students)
+
+#Then we will use reduce to intersect them all
+all_likes = reduce(set.intersection, likes)
+
+#This would often be written in one line, like so:
+reduce(set.intersection, map(lambda x: set(x["likes"]), students))
+
+#Again, functional programming is generally has a steeper learning curve than
+#"normal" Python programming style.  However, there are some situations where it can
+#be helpful to think functionally.  Most importantly, R is a functional programming language
+#so understanding these topics will make you a much better R programmer.
 
 #%%
 """LIST COMPREHENSIONS"""
