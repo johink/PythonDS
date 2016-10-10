@@ -8,7 +8,7 @@ Being qualified for a job posting means that you have all of the skills listed
 in the requirements
 
 The function will take in a list of jobs, and a list of your skills, and return
-both the name of the company and the position for which you are qualified for
+both the names of the companies and the positions for which you are qualified
 """
 #%%
 
@@ -32,7 +32,20 @@ jobs = [{"Company":"Stewgle",
          "Requires":["SAS","Excel","SQL","Modeling","Statistics"]}]
 
 def qualified(jobs, skills):
-    results = [] #Add the jobs you qualify for to results as a tuple (company, position)
+    #Let's use pseudo-code to break this problem down:
+    #First, we'll create a list to hold our results
+    results = []
+    
+    #Now, we'll look at each job posting:
+    
+        #Check if we qualify for the current job posting:
+        #Remember that you can check if a set is a super-set or sub-set of another set by using >= and <=
+        #Additionally, you could also use the "in" operator to see if all the required skills are in your list of skills
+    
+            #If we do qualify, add (Company, Position) to results:
+
+
+
     return results
 
 assert qualified(jobs, my_skills) == [("Uber","Business Analyst"),("KRAS","Consultant")]
@@ -55,9 +68,11 @@ workout = [("chest",("Incline Bench",8,135)),("triceps",("Skull-Crushers",12,35)
            ("triceps",("Dips",14,45)),("triceps",("Triceps Extension",6,75)),
            ("chest",("Bench Press",6,315)),("chest",("Dumbbell Flys",7,35)),
            ("chest",("Bench Press",1,405)),("chest",("Dumbbell Flys",2,85))]
-  
+           
+           
+           
 #%%
-         
+
 """ Q3.
 In the hit game Dungeons & Dragons, players roll many abnormally-sided dice.  One of
 these dice is a 20-sided die, also referred to as a "d20."  In the game, rolling a 20
@@ -66,8 +81,17 @@ is usually considered an "automatic success" or "critical success."
 Using random number generation and control structures, create a distribution of the number
 of d20 rolls it takes to score a critical success for 10,000 trials.  In other words, at
 each trial, keep rolling the die until it comes up 20, and keep track of the number of rolls.
-Repeat this until you have gotten 10,000 successes.  It's up to you to decide which data
-structure would be best for storing this information!
+Repeat this until you have gotten 10,000 successes.  You should use a list to keep track of these
+rolls, which we will use to graph the distribution!
 """
 import random
 print(random.randint(1,20)) #Here is your d20!
+my_data = []
+
+
+
+#%%
+#After you have your 10,000 numbers, run this code to see the distribution:
+import pandas as pd
+vector_of_rolls = pd.Series(my_data)
+vector_of_rolls.plot.hist()

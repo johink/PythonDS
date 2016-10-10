@@ -10,7 +10,7 @@
 2 ^ 3 #I told you this wouldn't work!
 
 2.2 * 2 #Numbers with decimals are floating-point
-2.0 + 15
+2.0 + 15 #This is called "type coercion"
 
 
 """BOOLEAN VALUES"""
@@ -66,6 +66,7 @@ str(3.14159)
 int(3.5)
 str(True)
 float("5.323")
+float("$5.32") #Float doesn't understand how to read this, so it throws an error!
 bool(1)
 bool("False") #Is this what you expect?
 
@@ -83,6 +84,10 @@ None is None
 alist = ["hello",0,5.2,{},False,True,"",None,[]] #Which are truthy?
 [x for x in alist if x] #Only truthy values remain
 
+#If you forget whether something is falsey or not, just pass it to bool()
+bool(None)
+bool([None])
+
 
 """ASSIGNING VARIABLES"""
 
@@ -94,7 +99,7 @@ some_num += 2 #These are shortcut operators, instead of "some_num = some_num + 2
 # also try -= *= /= //= and **=
 
 #Variables must be defined in some way before accessing their value
-# is_not_defined * 2 #This will throw an error
+is_not_defined * 2 #This will throw an error
 
 #Remember that you can always find the type of a variable or literal with type()
 type("Hello")
@@ -104,14 +109,13 @@ type(None)
 type(some_num)
 
 
-
 """BASIC DATA STRUCTURES"""
 """LISTS"""
-#Lists are a relation of one or more elements.  The elements are always kept in the order you list them
+#Lists are a collection of one or more elements.  The elements are always kept in the order you give them
 courses = ["Data Visualization","Analytics Practicum","Data Management","Predictive Modeling","Analytics in the Bedroom"]
 digits_of_pi = [3,1,4,1,5,9]
 
-#However, lists do not have to contain just one data type
+#However, lists do not have to be homogeneous
 fav_things = ["Lucky Number Sleven",7,11]
 
 #You can slice lists and get their length just like with strings
@@ -135,6 +139,7 @@ unloved = set(courses) - set(responses)
 
 """TUPLES"""
 #Tuples are like lists, but they are immutable (i.e. their contents cannot be changed)
+#Strings are another immutable data type.  Basically, if you alter a string or a tuple, it creates a new one!
 #Tuples have convenient syntax for dealing with multiple values at once
 #Create a tuple by assigning a comma-separated list to a single variable
 mytuple = ("Donuts (1 doz.)",3,5)
@@ -160,10 +165,11 @@ print(str(qty) + "x " + item + " @ $" + str(unit_price) + " per")
 #Values can be literally anything, including other dictionaries!
 John = {"nickname":"Johnny B","age":12,"cool?":False,"likes":["Trampoline Park","Python","Ping Pong"]}
 
-#Slicing with a key will give you back the value associated with it!
+#You can access a key's associated value by passing in the key
 John["nickname"]
 John["likes"]
-#If the value can also be sliced, feel free to slice again
+
+#If the value you get back can also be further subsetted, feel free to keep going!
 John["likes"][1]
 
 Chase = {'nickname':'High-Speed','age':14,'cool?':True,'likes':['Ping Pong','SAS','Trampoline Park']}
@@ -284,7 +290,7 @@ while i < 5:
 """
 
 #%%
-#While loops are useful when the number of iterations is not well-defined
+#While loops are useful when the number of iterations is not well-defined (also known as non-deterministic)
 #Here we will roll a die until we get a 6
 import random
 dieroll = 0
@@ -339,6 +345,7 @@ for does_not_matter in range(len(students)):
 """FUNCTIONS"""
 #Functions make your life easier (trust me!) 
 #by preventing you from having to retype the same thing over and over again
+#Think back to databases:  Why do we only want to store a value once?  Writing a function is similar.
 #Just like fors and ifs, all of the indented code below the def xxx: statement belongs to the function
 def conf_int(data, clevel = .9):
     from scipy import stats

@@ -11,8 +11,8 @@ matplotlib.style.use("ggplot")
 #Load the dataset
 mydf = pd.read_csv("week2/mtcars.csv")
 
-#Check out the first six rows
-mydf.head()
+#Check out the first five rows
+mydf.head(5)
 
 #inline graphics appear "in-line" in the IPython window
 %matplotlib inline
