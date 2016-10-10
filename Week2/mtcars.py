@@ -9,7 +9,7 @@ from mpl_toolkits.mplot3d import Axes3D #Axes3D allows us to choose "3d" as a pr
 matplotlib.style.use("ggplot")
 
 #Load the dataset
-mydf = pd.read_csv("week2/mtcars.csv")
+mydf = pd.read_csv("mtcars.csv")
 
 #Check out the first five rows
 mydf.head(5)
@@ -37,6 +37,18 @@ mydf.plot.hist(alpha =.3)
 
 #Scatterplots are similarly easy:
 mydf.plot.scatter("hp","mpg")
+
+#%%
+#Here we will differentiate between American and other cars
+
+info = {"colors":["r","b"],"labels":["Foreign","Domestic"]}
+
+for index, data in mydf.groupby("am"):
+    plt.scatter(data["hp"], data["mpg"], label=info["labels"][index], color=info["colors"][index])
+
+plt.legend(loc = "best")
+plt.ylabel("Miles Per Gallon")
+plt.xlabel("Horsepower")
 
 #%%
 

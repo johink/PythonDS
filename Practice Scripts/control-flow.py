@@ -64,7 +64,8 @@ damage potential
 
 #%%
 #User input example:
-while True:
+done = False
+while not done:
     userinput = input("Enter 1 for Diet Coke, 2 for Cherry Coke, or q to quit > ")
     if userinput == "1":
         print("One Diet Coke, coming right up!")
@@ -72,6 +73,6 @@ while True:
         print("Cherry Coke it is, my good sir.")
     elif userinput == "q":
         print("Quitting...")
-        break #break exits a while or for loop
+        done = True
     else:
         print("Invalid entry.  Please try again...")

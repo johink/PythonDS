@@ -1,0 +1,5 @@
+"""NUMPY"""
+
+"""TODO
+INSERT A LOT OF NUMPY FUNCTIONS
+"""
