@@ -134,7 +134,7 @@ list(big_iterable)
 #running out of memory
 
 #%%
-#You can create your own iterables using the "yield" keyword.
+#You can create your own generators (which are a type of iterable) using the "yield" keyword.
 #Let's recreate the timer examples above using generators:
 
 def counter_generator(name):
@@ -214,7 +214,7 @@ all_likes = reduce(set.intersection, likes)
 #This would often be written in one line, like so:
 reduce(set.intersection, map(lambda x: set(x["likes"]), students))
 
-#Again, functional programming is generally has a steeper learning curve than
+#Again, functional programming generally has a steeper learning curve than
 #"normal" Python programming style.  However, there are some situations where it can
 #be helpful to think functionally.  Most importantly, R is a functional programming language
 #so understanding these topics will make you a much better R programmer.
