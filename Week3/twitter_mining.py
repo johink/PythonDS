@@ -110,5 +110,3 @@ for tweet in all_data:
 mydf = pd.DataFrame(summary)
 
 #%%
-
-mydf.loc[0:20,"loc"]

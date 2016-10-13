@@ -9,12 +9,12 @@ it by looping through each index, adding that value to a sum variable, then
 returning that at the end let's look at the structure of the data.
 
 Instead of looking at a list as a series of indexed positions, it can be 
-looked at as having to forms:
+looked at as having two forms:
 - the empty list, []
 - a list with a value in the head position, index 0, and some sub-list in the 
 tail position beyond that
 
-Through this lense, the singleton list [3] can be look at as the value 3 
+Through this lens, the singleton list [3] can be look at as the value 3 
 in the head position, and the empty list, [], in the tail position.  [1,2] 
 can be looked at as 1 in head position and the sub-list [2] in the tail 
 position, which can similarly be broken down.
@@ -54,7 +54,7 @@ recursive binary search tree operations are a reasonable option.
 
 The BSTree has the following properties:
 -It is a tree, which consists of a root node that holds some data and a 
-    connection to it's "children" nodes that are of the same form
+    connection to its "children" nodes that are of the same form
 -Each node is binary, only having two "children" nodes, left and right
 -The tree is ordered using this search property, where all of the nodes 
     to the left of the current node have data that is less than the value of 
@@ -135,13 +135,13 @@ class BSTree:
         return self._root == None
 
     def min(self):
-        return self._min(data, self.root)
+        return self._min(data, self.root) #Should data be in here?
 
     def _min(self, node):
         raise NotImplementedError("The minimum function needs to be defined")
 
     def max(self):
-        return self._max(data, self.root)
+        return self._max(data, self.root) #Should data be in here?
 
     def _max(self, node):
         raise NotImplementedError("The maximum function needs to be defined")

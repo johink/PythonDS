@@ -1,4 +1,4 @@
-
+"""HOMEWORK THREE"""
 
 """ Q1.
 The school made a mistake in the undergraduate course catalog creating the 
@@ -15,7 +15,7 @@ that matches only the proper format for a course identifier, then run it on
 each entry the course list and return a list where they do not match.
 
 **Bonus**
-Write the negation of the previous regex, one which only matches IMPROPER 
+Write the negation of the previous regex, one which only matches IMPROPERLY 
 formatted identifiers.  Assume that improperly identified terms are:  
 -3 or 4 capital letters,
 -a space,
@@ -28,3 +28,60 @@ course_list = ['ART 156', 'ART149G', 'ART 196', 'ART 212L', 'ART 245', 'ART 227'
 answer = []
 
 assert answer.sort() ==  ['ART149G', 'ART336', 'ARTTT 377', 'BIO2 105', 'BIO 233T', 'CSC 126D', 'CSC 130E', 'CS 284G', 'GTCS 004', 'GTCS 285W', 'GTCS 488', 'GTCS 342P', 'LIN 024', 'LIN 550', 'MTH188', 'POLs 104', 'PO 256', 'POL 369X', 'ROM 119Y', 'ROM 280HI'].sort()
+
+#%%
+
+""" Q2.
+Much to your chagrin, your organization likes to store all employee information in flat files.
+For example, the employee record for Pippy Longstocking is as follows:
+"""
+
+# Longstocking, Pippy A. Accountant II $65,000 (123) 456-7890 palongs@abc.com 2007-03-21
+
+"""
+Unfortunately, it's time for the monthly update of employee information.
+This process usually takes the secretary Bobby an entire day to complete,
+but you've recently learned about Regular Expressions and believe you can 
+write a script to automate this process.
+
+Your boss has provided you a sample of the employee information.  Read in the 
+employees.txt file which should be located in the Week3 folder.  Each line 
+represents an employee instance.  The following things need to be updated:
+
+1. Our domain name was too expensive, so we changed from "abc.com" to "abcompany.info"
+2. Sales employees got a 5% pay raise this month for record-breaking sales numbers
+3. The county split area code 123.  We are now part of area code 321.
+
+Write a script which reads in the employee data and writes out a new file
+called fixed_emps.txt with corrected information
+"""
+
+#Feel free to use regular expressions, match groups and string functions to solve
+#this problem in any way you can.  Remember that, while regular expressions are very powerful,
+#be careful that you don't "light a candle with a flamethrower."  In other words,
+#don't use regular expressions to do something that a string function could easily do.
+
+
+#%%
+
+""" Q3.
+Use your own Twitter account - or create one if you don't already have one - and
+gather tweets about whatever topic you find interesting.  Try to get at least
+a thousand tweets.  Load the tweets into Python, and do some analysis on them.
+"""
+
+#What are the most popular hashtags that appear in your tweets?
+
+
+#What portion of your users have geo-location turned on?  Where are they located?
+
+
+#What are some common words in your tweets?  Common digraphs?
+
+
+#What's the username of the youngest Twitter account, and how old is it?
+
+
+#What's the username of the Twitter account that has the most friends?
+
+
