@@ -1,7 +1,5 @@
 from functools import reduce
 
-# lambda, map, reduce, filter, list comprehensions
-
 """Q1.
 Define the sum_list function(description in opt1.py and recursion.py) using 
 only the reduce function and a lambda function.
@@ -45,3 +43,5 @@ Filter returns an iterable object, so to convert it back to a string we use
 def no_vowels(in_string):
     filter_return = []      # replace this with the call to filter
     return ''.join(filter_return)
+
+
