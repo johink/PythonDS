@@ -155,7 +155,7 @@ next(tick)
 next(tock)
 
 #%%
-#You can make collections into iterators if you want:
+#You can create an iterator with the iter() function, which is helpful in understanding what iterators do:
 nums = iter([17,21,2,55,"HI :)"])
 type(nums)
 
@@ -179,12 +179,10 @@ sum([one * two for one in x for two in p_x])
 #However, you could use zip() to turn the separate lists into a list of tuples:
 sum([one * two for one, two in zip(x, p_x)])
 
-#help your R coding.  Reduce applies a binary function to the first two 
-
 #%%
 """REDUCE"""
-#Reduce has been moved to the "functools" library, but understanding it will
-#elements in a list, and keeps going until there's only one item left
+#Reduce has been moved to the "functools" library, but understanding it will help your R coding.  
+#Reduce applies a binary function to the first two elements in a list, and keeps going until there's only one item left
 from functools import reduce
 alist = [55,21,12,100,15,88,71]
 wordlist = ["Hi","Hey","Yo","Reduce is cool"]

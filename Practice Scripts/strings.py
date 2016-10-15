@@ -138,7 +138,7 @@ import random
 words1 = ["Sir","Ma'am","Son","Panda","Kitty"]
 words2 = ["day","life","meal","trip","rest","trip to the Moon","flight"]
 
-"Goodbye {}, have a nice {}!".format(words1[int(random.random()*len(words1))],words2[int(random.random()*len(words2))])
+"Goodbye {}, have a nice {}!".format(words1[random.randrange(len(words1))], words2[random.randrange(len(words2))])
 
 #%%
 orderitems = [("Toothpaste",3,2.49),("Toothbrush",1,4.00),("Floss",2,1.20)]
