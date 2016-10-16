@@ -110,6 +110,7 @@ for tweet in all_data:
 mydf = pd.DataFrame(summary)
 
 #%%
+
 import json
 #Let's dig into a more meaty dataset:  All tweets containing "#debate" during the second presidential debate
 all_data = []
@@ -132,9 +133,10 @@ for tweet in all_data:
     
 #%%    
 #Here we will make a list of tuples, with the first item being the hashtag, and the second item being the number of times that hashtag is in the list
-counts = [(hashtag,list_of_hashtags.count(hashtag)) for hashtag in set(list_of_hashtags) ]
+counts = [(hashtag,list_of_hashtags.count(hashtag)) for hashtag in set(list_of_hashtags)]
 
 #%%
+
 #Uh oh!  That was wayyyyy too slow.  Luckily, Python has many libraries with efficient implementations for common use cases
 #The Counter function does exactly what we need:
 from collections import Counter
@@ -163,11 +165,12 @@ from nltk.corpus import stopwords
 import html
 
 def clean_tweet(tweet, trash):  
-    #Turn the tweet into a list of lower case individual words
+    #Turn things like &gt; to >
     tweet = html.unescape(tweet)
+    #Turn the tweet into a list of lower case individual words
     tweet = tweet.lower().split()
     #Get rid of the words which are hyperlinks, and replace everything that isn't a letter, # or @ with a blank
-    tweet = [re.sub(r"[^A-z|0-9|#|@|:|/]+","", word) for word in tweet if not word.startswith("http")]
+    tweet = [re.sub(r"[^A-z|0-9|#|@]+","", word) for word in tweet if not word.startswith("http")]
     #Remove all the trash words
     tweet = [word for word in tweet if word not in trash and len(word) > 2]
     #Put all the words back together with a blank in between them

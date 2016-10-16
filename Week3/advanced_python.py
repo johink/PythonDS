@@ -38,8 +38,8 @@ square(8)
 
 #%%
 #Even though 'power' should be forgotten now (it's out of scope), it can still be accessed
-#This is called a 'closure' in functional programming.
-#Closures are a way for functions to "remember" things that would usually be deleted.
+#This is called a 'closure' in programming.
+#Closures are a way for functions to "remember" things that would normally have gone out of scope.
 #Here is a closure which remembers how many times it is called:
 def timer(name):
     x = 0
@@ -61,7 +61,7 @@ tock()
 
 #%%
 #What would happen if we used a global variable with the global keyword, 
-#instead of an enclosure with the nonlocal keyword?
+#instead of a closure with the nonlocal keyword?
 x = 0
 def timer(name):
     def temp():
@@ -102,7 +102,7 @@ Chase = {'nickname':'High-Speed','age':14,'cool?':True,'likes':['Ping Pong','SAS
 Martha = {"nickname":"Top Dawson",'age':17,"cool?":True,"likes":["R",'Duke Energy',"Probably Cats?"]}
 students = [John,Chase,Martha]
 
-print(filter(lambda x: x["age"] >=13,students))
+print(filter(lambda x: x["age"] >=13, students))
 
 for student in filter(lambda x: x["age"] >=13, students):
     print(student["likes"])
@@ -119,12 +119,13 @@ mydf.loc[mydf["age"] >= 13,"likes"]
     
 #%%
 """ITERABLES"""
-#We haven't really discussed iterables before, but they're important
-#Iterables are much more memory efficient than creating an entire list or dictionary
-#Iterators support "lazy evaluation," which means that code is only evaluated when it's needed
+#We haven't really discussed iterables before, but we've been using them since day 1
+#Iterables are a general name for something you can iterate over, like when you use a for loop
+#A specific kind of iterable is a generator.  These are much more efficient than creating an entire list or dictionary in memory,
+#because generators only calculate values as they are needed
 
-#The range() function also returns an iterable
-#Here's an iterable which contains the numbers 0 through 100 trillion
+#Ranges are a special type of iterable object
+#Here's a range which contains 100 trillion values
 big_iterable = range(100000000000000)
 
 #Look what happens when you try to fit it all into one list!
@@ -160,7 +161,7 @@ nums = iter([17,21,2,55,"HI :)"])
 type(nums)
 
 #This can cause an error if you run out of numbers, so you're better off using a for loop
-print(next(nums)) 
+print(next(nums))
 
 #%%
 """MAP"""
@@ -189,11 +190,22 @@ wordlist = ["Hi","Hey","Yo","Reduce is cool"]
 #The most common "reduce" is sum!
 reduce(lambda x, y: x + y, alist)
 
-#Find the highest odd number in a list
-reduce(lambda x, y: y if y % 2 == 1 and y > x else x, alist, 0)
 
 #Find the total length of all words in a list
 reduce(lambda x, y: x + len(y), wordlist, 0)
+
+#Find the highest odd number in a list
+reduce(lambda x, y: y if y % 2 == 1 and y > x else x, alist, 0) #Is this easy to understand?
+
+#Let's rewrite that lambda in an easier-to-understand function
+def higher_odd(x, y):
+    if y % 2 == 1 and y > x:
+        return y
+    else:
+        return x
+        
+#We can also pass our own defined functions:
+reduce(higher_odd, alist, 0)
 
 #%%
 #These tools are very powerful when combined together
