@@ -104,7 +104,7 @@ for tweet in all_data:
     mydict["time"] = pd.to_datetime(tweet["created_at"])
     mydict["text"] = tweet["text"]
     mydict["hashtags"] = [x["text"] for x in tweet["entities"]["hashtags"]]
-    mydict["loc"] = tweet["geo"] if tweet["geo"] is not None else tweet["user"]["location"]
+    mydict["loc"] = tweet["coordinates"] if tweet["coordinates"] else tweet["place"]
     summary.append(mydict)
 
 mydf = pd.DataFrame(summary)
@@ -122,6 +122,101 @@ with open("c:/users/john/desktop/python course/tweets.txt") as file:
             all_data.append(json.loads(line))
             
 print(all_data[0])
+
+#%%
+#Let's plot where the tweets are coming from:
+geotweets = list(filter(lambda x: x["loc"], all_data))
+
+import plotly.plotly as py
+import pandas as pd
+
+plotly.tools.set_credentials_file(username='johink', api_key='04uwzzlxxo')
+
+df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/2011_february_us_airport_traffic.csv')
+df.head()
+
+df['text'] = df['airport'] + '' + df['city'] + ', ' + df['state'] + '' + 'Arrivals: ' + df['cnt'].astype(str)
+
+scl = [ [0,"rgb(5, 10, 172)"],[0.35,"rgb(40, 60, 190)"],[0.5,"rgb(70, 100, 245)"],\
+    [0.6,"rgb(90, 120, 245)"],[0.7,"rgb(106, 137, 247)"],[1,"rgb(220, 220, 220)"] ]
+
+data = [ dict(
+        type = 'scattergeo',
+        locationmode = 'USA-states',
+        lon = df['long'],
+        lat = df['lat'],
+        text = df['text'],
+        mode = 'markers',
+        marker = dict( 
+            size = 8, 
+            opacity = 0.8,
+            reversescale = True,
+            autocolorscale = False,
+            symbol = 'square',
+            line = dict(
+                width=1,
+                color='rgba(102, 102, 102)'
+            ),
+            colorscale = scl,
+            cmin = 0,
+            color = df['cnt'],
+            cmax = df['cnt'].max(),
+            colorbar=dict(
+                title="Incoming flightsFebruary 2011"
+            )
+        ))]
+
+layout = dict(
+        title = 'Most trafficked US airports<br>(Hover for airport names)',
+        colorbar = True,   
+        geo = dict(
+            scope='usa',
+            projection=dict( type='albers usa' ),
+            showland = True,
+            landcolor = "rgb(250, 250, 250)",
+            subunitcolor = "rgb(217, 217, 217)",
+            countrycolor = "rgb(217, 217, 217)",
+            countrywidth = 0.5,
+            subunitwidth = 0.5        
+        ),
+    )
+
+fig = dict( data=data, layout=layout )
+py.iplot( fig, validate=False, filename='d3-airports' )
+
+
+#%%
+import numpy as np
+
+sample = np.random.choice(len(geotweets), 1000, replace=False)
+
+sampletweets = [geotweets[i] for i in sample]
+
+#%%    
+def get_class(tweet):
+    while True:
+        print("\n\n\n")
+        print(tweet["text"])
+        print("1: Pro-Hillary; 2: Pro-Trump; 3: Other")
+        answer = input("> ")
+        if answer == "1":
+            return "Pro-Hillary"
+        elif answer == "2":
+            return "Pro-Trump"
+        elif answer == "3":
+            return "Other"
+            
+for tweet in sampletweets:
+    tweet["class"] = get_class(tweet)
+    
+#%%
+import json
+
+classtweets = json.dumps(sampletweets)
+
+#%%
+with open("classtweets.txt", "w") as outfile:
+    outfile.write(classtweets)
 
 #%%
 #Now we have a list containing all of the tweets; let's do some analysis!
@@ -185,9 +280,19 @@ print("After: {}".format(clean_tweet(all_data[12]["text"], stop)))
 
 #%%
 #Now we'll convert all the texts
-processed_tweets = []
-for tweet in all_data:
-    processed_tweets.append(clean_tweet(tweet["text"], stop))
+import json
+import pandas as pd
+
+with open("classtweets.txt") as infile:
+    classtweets = infile.read()
+    
+classtweets = json.loads(classtweets)
+for tweet in classtweets:
+    tweet["text_clean"] = clean_tweet(tweet["text"], stop)
+
+classtweets = pd.DataFrame(classtweets)
+traintweets = classtweets.sample(frac = .8, random_state = 88)
+testtweets = classtweets.drop(traintweets.index)
     
 #%%
 #Now we can use scikit-learn's CountVectorizer to create models!
@@ -199,13 +304,45 @@ vectorizer = CountVectorizer(analyzer = "word", max_features = 5000)
 #Now we will create a Bag of Words!
 #The 5,000 most common words are given their own column, and each row represents a tweet
 #Whatever words were present in the tweet will be represented by a "1"
-train = vectorizer.fit_transform(processed_tweets)
-
-#Here we are converting the fit_transform output to a numpy array
-#numpy arrays are very efficient
-train = train.toarray()
+train = vectorizer.fit_transform(traintweets["text_clean"])
 
 #If you want to see the words which correspond to the columns, use get_feature_names()
 vectorizer.get_feature_names()
 
-tweet = all_data[12]["text"]
+#%%
+#Let's train a naive Bayes model
+from sklearn.naive_bayes import MultinomialNB
+from sklearn import metrics
+import numpy as np
+
+#Here we instantiate a MultinomialNB object, and call its .fit() method, which creates a classifier
+classifier = MultinomialNB().fit(train, traintweets["class"])
+
+#Now we have to transform our test data using our vectorizer, but be careful not to re-fit
+#i.e. we will only do .transform() and not .fit_transform()
+test = vectorizer.transform(testtweets["text_clean"])
+
+#Now to predict the class labels
+predictions = classifier.predict(test)
+
+print("Accuracy = {}".format(np.mean(predictions == testtweets["class"])))
+
+print(metrics.confusion_matrix(testtweets["class"], predictions))
+
+print(metrics.classification_report(testtweets["class"], predictions))
+    
+#%%
+#Here's a support vector machine model...
+from sklearn.linear_model import SGDClassifier
+SVMclassifier = SGDClassifier(loss='hinge', penalty='l2', alpha=1e-3, n_iter=5, random_state=42)
+SVMclassifier.fit(train, traintweets["class"])
+SVMpredictions = SVMclassifier.predict(test)
+
+print("Accuracy = {}".format(np.mean(SVMpredictions == testtweets["class"])))
+
+print(metrics.confusion_matrix(testtweets["class"], SVMpredictions))
+
+print(metrics.classification_report(testtweets["class"], SVMpredictions))
+
+
+
