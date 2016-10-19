@@ -124,70 +124,9 @@ with open("c:/users/john/desktop/python course/tweets.txt") as file:
 print(all_data[0])
 
 #%%
-#Let's plot where the tweets are coming from:
-geotweets = list(filter(lambda x: x["loc"], all_data))
-
-import plotly.plotly as py
-import pandas as pd
-
-plotly.tools.set_credentials_file(username='johink', api_key='04uwzzlxxo')
-
-df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/2011_february_us_airport_traffic.csv')
-df.head()
-
-df['text'] = df['airport'] + '' + df['city'] + ', ' + df['state'] + '' + 'Arrivals: ' + df['cnt'].astype(str)
-
-scl = [ [0,"rgb(5, 10, 172)"],[0.35,"rgb(40, 60, 190)"],[0.5,"rgb(70, 100, 245)"],\
-    [0.6,"rgb(90, 120, 245)"],[0.7,"rgb(106, 137, 247)"],[1,"rgb(220, 220, 220)"] ]
-
-data = [ dict(
-        type = 'scattergeo',
-        locationmode = 'USA-states',
-        lon = df['long'],
-        lat = df['lat'],
-        text = df['text'],
-        mode = 'markers',
-        marker = dict( 
-            size = 8, 
-            opacity = 0.8,
-            reversescale = True,
-            autocolorscale = False,
-            symbol = 'square',
-            line = dict(
-                width=1,
-                color='rgba(102, 102, 102)'
-            ),
-            colorscale = scl,
-            cmin = 0,
-            color = df['cnt'],
-            cmax = df['cnt'].max(),
-            colorbar=dict(
-                title="Incoming flightsFebruary 2011"
-            )
-        ))]
-
-layout = dict(
-        title = 'Most trafficked US airports<br>(Hover for airport names)',
-        colorbar = True,   
-        geo = dict(
-            scope='usa',
-            projection=dict( type='albers usa' ),
-            showland = True,
-            landcolor = "rgb(250, 250, 250)",
-            subunitcolor = "rgb(217, 217, 217)",
-            countrycolor = "rgb(217, 217, 217)",
-            countrywidth = 0.5,
-            subunitwidth = 0.5        
-        ),
-    )
-
-fig = dict( data=data, layout=layout )
-py.iplot( fig, validate=False, filename='d3-airports' )
-
-
-#%%
 import numpy as np
 
+geotweets = list(filter(lambda x: x["loc"], all_data))
 sample = np.random.choice(len(geotweets), 1000, replace=False)
 
 sampletweets = [geotweets[i] for i in sample]
@@ -346,3 +285,96 @@ print(metrics.classification_report(testtweets["class"], SVMpredictions))
 
 
 
+#%%
+#Let's plot where the tweets are coming from:
+import pandas as pd
+geotweets = list(filter(lambda x: x["loc"], all_data))
+
+def trans_tweet(tweet):
+    result = {}
+    result["long"] = tweet["loc"]["coordinates"][0] if tweet["loc"].get("bounding_box") is None else tweet["loc"]["bounding_box"]["coordinates"][0][0][0]
+    result["lat"] = tweet["loc"]["coordinates"][1] if tweet["loc"].get("bounding_box") is None else tweet["loc"]["bounding_box"]["coordinates"][0][0][1]
+    result["text"] = tweet["text"]
+    result["time"] = tweet["time"]
+    result["class"] = tweet.get("class")
+    return result
+    
+mydf = pd.DataFrame(list(map(trans_tweet, geotweets)))
+
+mydf["time"] = pd.to_datetime(mydf["time"])
+
+predictions = classifier.predict(vectorizer.transform(mydf["text"]))
+
+mydf["class"] = predictions
+
+demtweets = mydf[mydf["class"] == "Pro-Hillary"]
+reptweets = mydf[mydf["class"] == "Pro-Trump"]
+
+demtweets = demtweets.groupby(["lat","long"]).count().reset_index()
+reptweets = reptweets.groupby(["lat","long"]).count().reset_index()
+
+from math import sqrt
+demtweets["scale"] = list(map(sqrt,demtweets["class"]*4))
+reptweets["scale"] = list(map(sqrt,reptweets["class"]*4))
+
+
+#%%
+
+import plotly
+import plotly.plotly as py
+
+
+plotly.tools.set_credentials_file(username='johink', api_key='04uwzzlxxo')
+
+data = [ dict(
+        type = 'scattergl',
+        name = "Pro-Hillary / Anti-Trump",
+        locationmode = 'USA-states',
+        lon = demtweets['long'],
+        lat = demtweets['lat'],
+        mode = 'markers',
+        marker = dict( 
+            size = demtweets["scale"], 
+            opacity = 0.3,
+            symbol = 'circle',
+            color = "rgb(50, 50, 255)",
+        )),
+        dict(
+        type = 'scattergl',
+        name = "Pro-Trump / Anti-Hillary",
+        locationmode = 'USA-states',
+        lon = reptweets['long'],
+        lat = reptweets['lat'],
+        mode = 'markers',
+        marker = dict( 
+            size = reptweets["scale"], 
+            opacity = 0.3,
+            symbol = 'circle',
+            color = "rgb(255, 50, 50)",
+        ))]
+
+layout = dict(
+        title = 'Tweets during the second Presidential debate',
+        geo = dict(
+            scope='usa',
+            projection=dict( type='albers usa' ),
+            showland = True,
+            landcolor = "rgb(250, 250, 250)",
+            subunitcolor = "rgb(217, 217, 217)",
+            countrycolor = "rgb(217, 217, 217)",
+            countrywidth = 0.5,
+            subunitwidth = 0.5        
+        ),
+    )
+
+
+fig = dict( data=data, layout=layout )
+
+plot_url = py.plot(fig, filename='tweets')
+"""
+py.image.save_as(fig, filename='a-simple-plot.jpeg')
+
+from PIL import Image
+img = Image.open("a-simple-plot.jpeg")
+img.show()
+"""
