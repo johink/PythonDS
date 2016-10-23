@@ -95,26 +95,11 @@ print(json.dumps(all_data[0],sort_keys=True,indent=2))
 """
 
 #%%
-import pandas as pd
-pd.to_datetime(all_data[0]["created_at"])
-
-summary = []
-for tweet in all_data:
-    mydict = {}
-    mydict["time"] = pd.to_datetime(tweet["created_at"])
-    mydict["text"] = tweet["text"]
-    mydict["hashtags"] = [x["text"] for x in tweet["entities"]["hashtags"]]
-    mydict["loc"] = tweet["coordinates"] if tweet["coordinates"] else tweet["place"]
-    summary.append(mydict)
-
-mydf = pd.DataFrame(summary)
-
-#%%
 
 import json
 #Let's dig into a more meaty dataset:  All tweets containing "#debate" during the second presidential debate
 all_data = []
-#Read in the file
+#Read in the file: https://drive.google.com/open?id=0B651fVCo040CNWM5MTdhWW5FMXc
 with open("c:/users/john/desktop/python course/tweets.txt") as file:
     for line in file:
         #Only read in the lines that are not blank
@@ -294,7 +279,7 @@ def trans_tweet(tweet):
     result = {}
     result["long"] = tweet["loc"]["coordinates"][0] if tweet["loc"].get("bounding_box") is None else tweet["loc"]["bounding_box"]["coordinates"][0][0][0]
     result["lat"] = tweet["loc"]["coordinates"][1] if tweet["loc"].get("bounding_box") is None else tweet["loc"]["bounding_box"]["coordinates"][0][0][1]
-    result["text"] = tweet["text"]
+    result["text"] = clean_tweet(tweet["text"], stop)
     result["time"] = tweet["time"]
     result["class"] = tweet.get("class")
     return result
@@ -324,10 +309,10 @@ import plotly
 import plotly.plotly as py
 
 
-plotly.tools.set_credentials_file(username='johink', api_key='04uwzzlxxo')
+plotly.tools.set_credentials_file(username='xyz', api_key='abc')
 
 data = [ dict(
-        type = 'scattergl',
+        type = 'scattergeo',
         name = "Pro-Hillary / Anti-Trump",
         locationmode = 'USA-states',
         lon = demtweets['long'],
@@ -335,12 +320,13 @@ data = [ dict(
         mode = 'markers',
         marker = dict( 
             size = demtweets["scale"], 
-            opacity = 0.3,
+            sizemin = 3,
+            opacity = 0.4,
             symbol = 'circle',
             color = "rgb(50, 50, 255)",
         )),
         dict(
-        type = 'scattergl',
+        type = 'scattergeo',
         name = "Pro-Trump / Anti-Hillary",
         locationmode = 'USA-states',
         lon = reptweets['long'],
@@ -348,7 +334,8 @@ data = [ dict(
         mode = 'markers',
         marker = dict( 
             size = reptweets["scale"], 
-            opacity = 0.3,
+            sizemin = 3,
+            opacity = 0.4,
             symbol = 'circle',
             color = "rgb(255, 50, 50)",
         ))]
@@ -370,11 +357,14 @@ layout = dict(
 
 fig = dict( data=data, layout=layout )
 
+#This plots into your plotly account
 plot_url = py.plot(fig, filename='tweets')
-"""
-py.image.save_as(fig, filename='a-simple-plot.jpeg')
+
+
+""" If you'd rather create a picture:
+py.image.save_as(fig, filename='a-simple-plot.png')
 
 from PIL import Image
-img = Image.open("a-simple-plot.jpeg")
+img = Image.open("a-simple-plot.png")
 img.show()
 """
