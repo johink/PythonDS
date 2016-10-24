@@ -68,8 +68,14 @@ workout = [("chest",("Incline Bench",8,135)),("triceps",("Skull-Crushers",12,35)
            ("triceps",("Dips",14,45)),("triceps",("Triceps Extension",6,75)),
            ("chest",("Bench Press",6,315)),("chest",("Dumbbell Flys",7,35)),
            ("chest",("Bench Press",1,405)),("chest",("Dumbbell Flys",2,85))]
-           
-           
+
+results = {}
+
+
+
+assert results == {'chest': 5720, 'triceps': 2470, 'shoulders': 540}
+
+print("If you get here, you did it!")
            
 #%%
 
@@ -88,7 +94,11 @@ import random
 print(random.randint(1,20)) #Here is your d20!
 my_data = []
 
+#We need to loop 10,000 times
 
+  #At each loop, roll the die repeatedly until you get a 20, and keep track of the number of rolls
+  
+  #Add the number of rolls to the my_data list
 
 #%%
 #After you have your 10,000 numbers, run this code to see the distribution:
