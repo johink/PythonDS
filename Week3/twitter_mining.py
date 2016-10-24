@@ -108,39 +108,6 @@ with open("c:/users/john/desktop/python course/tweets.txt") as file:
             
 print(all_data[0])
 
-#%%
-import numpy as np
-
-geotweets = list(filter(lambda x: x["loc"], all_data))
-sample = np.random.choice(len(geotweets), 1000, replace=False)
-
-sampletweets = [geotweets[i] for i in sample]
-
-#%%    
-def get_class(tweet):
-    while True:
-        print("\n\n\n")
-        print(tweet["text"])
-        print("1: Pro-Hillary; 2: Pro-Trump; 3: Other")
-        answer = input("> ")
-        if answer == "1":
-            return "Pro-Hillary"
-        elif answer == "2":
-            return "Pro-Trump"
-        elif answer == "3":
-            return "Other"
-            
-for tweet in sampletweets:
-    tweet["class"] = get_class(tweet)
-    
-#%%
-import json
-
-classtweets = json.dumps(sampletweets)
-
-#%%
-with open("classtweets.txt", "w") as outfile:
-    outfile.write(classtweets)
 
 #%%
 #Now we have a list containing all of the tweets; let's do some analysis!
@@ -207,7 +174,7 @@ print("After: {}".format(clean_tweet(all_data[12]["text"], stop)))
 import json
 import pandas as pd
 
-with open("classtweets.txt") as infile:
+with open("Week3/classtweets.txt") as infile:
     classtweets = infile.read()
     
 classtweets = json.loads(classtweets)
@@ -309,7 +276,7 @@ import plotly
 import plotly.plotly as py
 
 
-plotly.tools.set_credentials_file(username='xyz', api_key='abc')
+plotly.tools.set_credentials_file(username='johink', api_key='yx8vw75avc')
 
 data = [ dict(
         type = 'scattergeo',
@@ -360,7 +327,7 @@ fig = dict( data=data, layout=layout )
 #This plots into your plotly account
 plot_url = py.plot(fig, filename='tweets')
 
-
+#%%
 """ If you'd rather create a picture:
 py.image.save_as(fig, filename='a-simple-plot.png')
 
@@ -368,3 +335,45 @@ from PIL import Image
 img = Image.open("a-simple-plot.png")
 img.show()
 """
+
+#%%
+#Plotly wasn't great for this application, so let's try Tableau
+#Tableau can use .csv files, so let's output our tweets dataframe:
+demtweets["class"] = "D"
+reptweets["class"] = "R"
+demtweets.append(reptweets).to_csv("tableau.csv")
+
+#%%
+"""This code shows what I did to classify the tweets:"""
+import numpy as np
+
+geotweets = list(filter(lambda x: x["loc"], all_data))
+sample = np.random.choice(len(geotweets), 1000, replace=False)
+
+sampletweets = [geotweets[i] for i in sample]
+
+#%%    
+def get_class(tweet):
+    while True:
+        print("\n\n\n")
+        print(tweet["text"])
+        print("1: Pro-Hillary; 2: Pro-Trump; 3: Other")
+        answer = input("> ")
+        if answer == "1":
+            return "Pro-Hillary"
+        elif answer == "2":
+            return "Pro-Trump"
+        elif answer == "3":
+            return "Other"
+            
+for tweet in sampletweets:
+    tweet["class"] = get_class(tweet)
+    
+#%%
+import json
+
+classtweets = json.dumps(sampletweets)
+
+#%%
+with open("classtweets.txt", "w") as outfile:
+    outfile.write(classtweets)
