@@ -6,11 +6,12 @@
 (2 + 7) * 3
 5 / 2
 5 // 2 #Floor division throws away the remainder
+5 % 2 #Modulo division keeps only the remainder
 2 ** 3 #Exponentiation is **, not ^
 2 ^ 3 #I told you this wouldn't work!
 
 2.2 * 2 #Numbers with decimals are floating-point
-2.0 + 15 #This is called "type coercion"
+15 * 1.0 #This is called "type coercion"  Even though 15 * 1.0 is clearly 15, the 15 was coerced into a float in order to be multiplied
 
 
 """BOOLEAN VALUES"""
@@ -63,7 +64,8 @@ str(3.14159)
 
 
 """CHANGING TYPES"""
-int(3.5)
+int(3.5) #int throws away the remainder; use round instead if that's your goal
+round(3.5)
 str(True)
 float("5.323")
 float("$5.32") #Float doesn't understand how to read this, so it throws an error!
@@ -109,6 +111,30 @@ type(None)
 type(some_num)
 
 
+
+"""CHECKPOINT"""
+#Each U.S. state has 2 Senators; how many senators are there in total?  Store the result in a variable named num_senators
+
+
+#There is currently 1 House Representative for every 733,103 people in the U.S.  
+#If the current U.S. population is 318,900,000, how many Representatives are there?
+#Put your answer in a variable called num_representatives
+
+
+#During the U.S. election, the winning candidate must receive a majority (greater than 50%) of electoral votes.  
+#The number of electoral votes is equal to the number of senators plus the number of representatives.
+#How many votes must a candidate receive at a minimum to win the election?
+
+
+#As Albert Einstein once famously said, "E = mc^2"
+#People think this has to do with relativity theory, but you know better, as the formula clearly means:
+#Enjoyment = milk * cookies^2
+#You like to drink a glass of milk after every five cookies
+#If you're planning on eating 13 cookies, how much Enjoyment are you about to receive?
+
+
+
+
 """BASIC DATA STRUCTURES"""
 """LISTS"""
 #Lists are a collection of one or more elements.  The elements are always kept in the order you give them
@@ -133,7 +159,7 @@ set(digits_of_pi)
 
 #Sets are nice because you can do math with them, and they are very efficient
 #Ex. you ask five students which course is their favorite, and want to find out which courses nobody chose
-responses = ["Data Visualization","Analytics Practicum","Data Visualization","Predictive Modeling","Data Visualization"]
+responses = ["Data Visualization","Analytics Practicum","Data Visualization","Data Management","Data Visualization"]
 unloved = set(courses) - set(responses)
 
 
@@ -217,6 +243,23 @@ students = [John,Chase,Martha] #Note how the order of the keys has been changed
   "spouse": null
 }
 """
+
+
+"""CHECKPOINT"""
+#Create a shopping list for your next trip to the grocery store.  Check if ice cream is in your list.
+
+
+#Create a "you" dictionary.  Add at least 4 keys, and make at least one of the values non-atomic (aka another data structure)
+
+
+#Create a list containing each individual digit of your phone number.
+
+
+#Turn that list into a set.  What's the length of your set?  If it's 10, you have a very lucky phone number!
+
+
+#Create a "you"ple using the same information as your "you" dictionary.  Which of these makes more sense to use, and why?
+
 
 
 #%%
@@ -342,6 +385,19 @@ for does_not_matter in range(len(students)):
 #%%
 
 
+"""CHECKPOINT"""
+#Check again if there's ice cream in your shopping list.  If there is, print "Yay!" and if not, print "Aww :("
+
+                                                                                                             
+#Create a for loop which adds all the odd numbers between 1 and 20
+#Remember that range(x,y) gives numbers starting from x up to but not including y
+
+
+#Do the same thing as the for loop above using a while loop instead.  Why is this a dumb idea? 
+
+
+
+#%%
 """FUNCTIONS"""
 #Functions make your life easier (trust me!) 
 #by preventing you from having to retype the same thing over and over again
@@ -365,3 +421,15 @@ if lb < hyp_mean < ub:
     print("Fail to reject the null hypothesis")
 else:
     print("Reject the null hypothesis")
+
+    
+"""CHECKPOINT"""
+#Write a function which takes in a shopping list, checks if ice cream is on the list and prints "Yay!" if it is or "Aww :(" if it isn't
+
+                                                                                                                          
+#Write a function which returns the number of unique items in its input list
+
+
+#Write a function which adds all the numbers in the input list and returns the sum (without using the sum function)
+
+
