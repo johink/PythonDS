@@ -171,7 +171,13 @@ dat["cond"]
 #row index slicing (all columns)
 dat[0:3]
 
-#Must use a property to slice both rows and columns
+#You can combine these actions:
+dat["cond"][0:3]
+dat[0:3]["cond"]
+
+#These slicing methods above should serve 99% of your needs, 
+#but these additional methods may be required in certain situations
+#Must use a property to simultaneously slice both rows and columns
 # .loc uses row and column labels
 dat.loc[1:2,"id"]  #Note that .loc is *inclusive* on both sides, i.e. [start,stop]
 

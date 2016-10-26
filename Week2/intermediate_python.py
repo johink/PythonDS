@@ -140,7 +140,7 @@ with open("readme.md") as file:
     for line in file:
         print(line)
         
-#Notice that the variable "line" still exists, but the file connection "pic" is totally gone
+#Notice that the variable "line" still exists, but the file connection "file" is totally gone
         
 #%%
         
