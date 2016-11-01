@@ -9,7 +9,7 @@ from mpl_toolkits.mplot3d import Axes3D #Axes3D allows us to choose "3d" as a pr
 matplotlib.style.use("ggplot")
 
 #Load the dataset
-mydf = pd.read_csv("mtcars.csv")
+mydf = pd.read_csv("Week2/mtcars.csv")
 
 #Check out the first five rows
 mydf.head(5)

@@ -37,13 +37,14 @@ def qualified(jobs, skills):
     results = []
     
     #Now, we'll look at each job posting:
-
+    for job in jobs:
         #Check if we qualify for the current job posting:
         #Remember that you can check if a set is a super-set or sub-set of another set by using >= and <=
         #Additionally, you could also use the "in" operator to see if all the required skills are in your list of skills
         #This is the subset operator.  It returns true when the thing on the right has all the elements of the thing on the left.
-
+        if set(job["Requires"]) <= set(skills):
             #If we do qualify, add (Company, Position) to results:
+            results.append((job["Company"],job["Position"]))
 
 
     return results
@@ -70,11 +71,12 @@ workout = [("chest",("Incline Bench",8,135)),("triceps",("Skull-Crushers",12,35)
            ("chest",("Bench Press",1,405)),("chest",("Dumbbell Flys",2,85))]
 
 results = {}
-
+for exercise in workout:
   #results.get(key, default) returns the value associated with key, or default if the key is not in the dictionary
   #If the nested nature of the "workout" variable is confusing, try playing with it in the IPython console at the bottom right
   #by arbitrarily slicing it until you better understand its structure.
   #For example, workout[0], workout[0][0], workout[0][1][0], etc.
+  results[exercise[0]] = results.get(exercise[0], 0) + exercise[1][1] * exercise [1][2]
 
 
 assert results == {'chest': 5720, 'triceps': 2470, 'shoulders': 540}
@@ -99,11 +101,16 @@ print(random.randint(1,20)) #Here is your d20!
 my_data = []
 
 #We need to loop 10,000 times
-
+for i in range(0,10000):
   #At each loop, roll the die repeatedly until you get a 20, and keep track of the number of rolls
-
+  dieroll = 0
+  num_rolls = 0
+  while dieroll != 20:
+    dieroll = random.randint(1,20)
+    num_rolls += 1
     
   #Add the number of rolls to the my_data list
+  my_data.append(num_rolls)
 
 #%%
 #After you have your 10,000 numbers, run this code to see the distribution:
