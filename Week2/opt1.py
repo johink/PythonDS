@@ -23,12 +23,7 @@ def sum_list2_helper(values, acc):
 
 
 assert sum_list2([1,2,3,4,5,6,7,8,9,10]) == 55
-
-
-
-#TODO:  Some sort of scope fill in the blank problem
-
-#TODO:  Figure out what exceptions a piece of code can throw example
+                 
 
 
 """Q2.
