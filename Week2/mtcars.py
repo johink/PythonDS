@@ -63,7 +63,7 @@ mydf[["mpg","hp","cyl"]].plot.box()
 #Luckily, we have matplotlib
 
 #qt makes graphics appear in a separate window
-%matplotlib qt
+%matplotlib qt5
 
 #First, we create a new figure
 fig = plt.figure(1)

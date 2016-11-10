@@ -87,16 +87,16 @@ for job_link in job_links:
   description_text = soup.find(class_ = "small-12 columns item").getText()
 
   #Everything that isn't a letter or number is turned into a blank space, and convert the result to lower case
-  description_text = re.sub(r"[^A-z|0-9]+", " ", description_text).lower()
+  tokens = re.sub(r"[^A-z|0-9]+", " ", description_text).lower()
   
   #split on blank spaces
-  tokens = description_text.split()
+  tokens = tokens.split()
   #Only allow words which are not stopwords
   tokens = [token for token in tokens if token not in stop]
   #Rejoin the words into a single string
   tokens = " ".join(tokens[2:])
   
-  results.append({"title":title, "company":company, "location":location,"posted":posted,"description":tokens})  
+  results.append({"title":title, "company":company, "location":location,"posted":posted,"parsed":tokens, "original":description_text})  
   
   num += 1
   time.sleep(1)
