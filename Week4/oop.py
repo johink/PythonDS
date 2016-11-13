@@ -17,6 +17,9 @@ class BankAccount(object):
         else:
             raise Exception("Your balance is less than ${}.".format(amt))
         return self.Balance
+        
+    def __str__(self):
+      return "Account {} has a balance of ${}".format(self.AccountNumber, self.Balance)
 
 #%%
 my_acct = BankAccount(5124125, 200)
@@ -34,3 +37,20 @@ temp.MakeWithdrawal(100)
 print(my_acct.Balance)
 
 #%%
+#Define __str__ function and all you have to do is this
+for account in accounts:
+  print(account)
+  
+  
+#%%
+#Now let's implement our own classes!
+
+
+
+
+
+
+
+
+
+
