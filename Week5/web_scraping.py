@@ -5,9 +5,9 @@ from urllib.parse import quote_plus
 import time
 import re
 
-jobs_to_search = ["Data Scientist", "Analytics"] #Add more jobs to look for here
-cities_to_search = ["Seattle, WA", "San Francisco, CA"] #Add more cities to search in here
-distance = 50 #Radius in miles from city
+jobs_to_search = ["Analytics"] #Add more jobs to look for here
+cities_to_search = ["Charlotte, NC", "Raleigh, NC"] #Add more cities to search in here
+distance = 30 #Radius in miles from city
 posted = 30 #Number of days back to search
 
 mapper = {"baseURL":"http://www.careerbuilder.com","job":"/jobs?keywords=", "loc":"&location=", "dist":"&radius=", "posted":"&posted="} #Can add more job sites here
@@ -103,6 +103,104 @@ for job_link in job_links:
   
 #%%
 #Now let's do some analysis!
+from datetime import datetime
 import pandas as pd
+now = datetime.now().date()
 mydf = pd.DataFrame(results)
-mydf.to_csv("results.csv")
+mydf.to_csv("results"+str(now)+".csv")
+
+#%%
+mydf = pd.read_csv("results"+str(now)+".csv", encoding = "latin-1")
+#%%
+#Let's normalize the "posted" variable to days
+def posted_norm(postvec):
+  import re
+  results = []
+  for item in postvec:
+    if re.search("hour", item):
+      results.append(0)
+    elif re.search("month", item):
+      results.append(30)
+    else:
+      numbers = re.search(r"(\d+)", item)
+      results.append(numbers.group())
+  return pd.Series(results)
+  
+#%%
+mydf["days_old"] = posted_norm(mydf.posted)
+#%%
+#Let's see how many jobs are available, and where
+mydf.location.value_counts().plot.barh()
+
+#%%
+#Who's hiring?
+mydf.company.value_counts()
+
+#%%
+#Let's see what are the common themes in Raleigh and Charlotte.  Do employers value different skills?
+
+rdf = mydf.parsed[mydf.location == "Raleigh, NC"]
+cdf = mydf.parsed[mydf.location == "Charlotte, NC"]
+
+def tf(corpus):
+  results = {}
+  for document in corpus:
+    for word in document.split():
+      results[word] = 1 + results.get(word, 0)
+  return results
+  
+rtf = tf(rdf)
+ctf = tf(cdf)
+
+#%%
+rresults = sorted(rtf.items(), key = lambda x: x[1], reverse = True)
+cresults = sorted(ctf.items(), key = lambda x: x[1], reverse = True)
+
+print(rresults[:50])
+print(cresults[:50])
+
+rset = set(map(lambda x: x[0], rresults[:100]))
+cset = set(map(lambda x: x[0], cresults[:100]))
+
+print([r for r in rset if r not in cset])
+print([c for c in cset if c not in rset])
+
+#%%
+#There is a lot of noise in this data consisting of vague/unrelated terminology
+#Let's set up some keywords that we're interested in
+Modeling = ["model","predictive","optimize","optimization","classification","descriptive","prescriptive","simulation","regression"]
+Programming = [" r "," sas ","python","sql"]
+BigData = ["hadoop","hdfs","spark","pig","hive","mapreduce"]
+Visualization = ["tableau","ggplot","visualization","matplotlib"]
+Metrics = ["metrics","dashboard","scorecard"]
+Boardroom = ["communication","interpersonal","communicator"]
+
+search = [Modeling, Programming, Visualization, Metrics, Boardroom, BigData]
+searchnames = ["Modeling","Programming","Visualization","Metrics","Boardroom","BigData"]
+flatsearch = [item for lists in search for item in lists]
+
+results = pd.DataFrame(index = range(len(mydf)), columns = flatsearch + searchnames)
+i = 0
+
+for document in mydf.parsed:
+  for term in flatsearch:
+    if document.find(term) >= 0:
+      results.loc[i][term] = 1
+  for category, topics in zip(searchnames, search):
+    results.loc[i][category] = 1 if any(results.loc[i][topics] == 1) else 0
+  i += 1
+
+results[results.isnull()] = 0
+        
+#%%
+#What programming language do people want?
+results[Programming].mean()
+
+#Do people care about big data?
+results[BigData].mean()
+
+#What do they care about?
+results[flatsearch].mean().sort_values()
+
+#Let's roll this up to the category level
+results[searchnames].mean().sort_values()
