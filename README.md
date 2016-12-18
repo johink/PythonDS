@@ -1,9 +1,9 @@
 # PythonDS
 
-## Repo for Data Science &amp; Programming with Python Course
+### Repo for Data Science &amp; Programming with Python Course
 
 
-## Topics:
+### Topics:
 * Modules
   * Pandas
   * Sci-Kit Learn
