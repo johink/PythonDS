@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.misc import imread
 
+%matplotlib qt5
 #Read in the file with RGB encoding
 pic = imread("Week4/hello.data", mode = "RGB")
 

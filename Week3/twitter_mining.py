@@ -2,12 +2,24 @@
 import json
 all_data = []
 #Read in the file
-with open("twitdata.txt") as file:
+with open("C:/Users/John/Desktop/PythonDS/Week3/twitdata.txt") as file:
     for line in file:
         #Only read in the lines that are not blank
         if not line.isspace():
             all_data.append(json.loads(line))
-        
+
+#%%
+with open("c:/users/john/desktop/file.txt", "w") as file:
+    file.write("Hello!")
+    
+#%%
+file = open("c:/users/john/desktop/file.txt", "w")
+file.write("Hello!")
+
+#%%
+
+file.close()
+
 #%%
 #Let's look at the structure of a tweet:
 print(json.dumps(all_data[0],sort_keys=True,indent=2))
@@ -100,7 +112,7 @@ import json
 #Let's dig into a more meaty dataset:  All tweets containing "#debate" during the second presidential debate
 all_data = []
 #Read in the file: https://drive.google.com/open?id=0B651fVCo040CNWM5MTdhWW5FMXc
-with open("c:/users/john/desktop/python course/tweets.txt") as file:
+with open("c:/users/john/desktop/pythonds/week3/tweets.txt") as file:
     for line in file:
         #Only read in the lines that are not blank
         if not line.isspace():
@@ -174,7 +186,7 @@ print("After: {}".format(clean_tweet(all_data[12]["text"], stop)))
 import json
 import pandas as pd
 
-with open("Week3/classtweets.txt") as infile:
+with open("C:/users/john/desktop/pythonds/Week3/classtweets.txt") as infile:
     classtweets = infile.read()
     
 classtweets = json.loads(classtweets)

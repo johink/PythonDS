@@ -13,7 +13,7 @@
 
 #A function which returns third item in a list
 (lambda x: x[2])([15,25,35,45,55])
-
+(lambda x: x[2])(25)
 #A function which returns every other item in the list
 (lambda x: x[::2])([15,25,35,45,55])
 
@@ -35,6 +35,9 @@ def powerhouse(power):
 square = powerhouse(2)
 square(13)
 square(8)
+
+cube = powerhouse(3)
+cube(4)
 
 #%%
 #Even though 'power' should be forgotten now (it's out of scope), it can still be accessed
@@ -107,7 +110,7 @@ print(filter(lambda x: x["age"] >=13, students))
 for student in filter(lambda x: x["age"] >=13, students):
     print(student["likes"])
     
-for student in filter(lambda x: "Ping Pong" in x["likes"]):
+for student in filter(lambda x: "Ping Pong" in x["likes"], students):
     student["cool?"] = True
     
 #%%    
@@ -117,6 +120,16 @@ mydf = pd.DataFrame(students)
 mydf.loc[mydf["age"] >= 13,"likes"]
     
     
+#%%
+#CHECKPOINT
+#Use the students dictionary and filter to get rid of any 
+#student whose nickname begins with "J"
+list(filter(lambda x: x["nickname"][0] != "J", students))
+
+#Use filter and the values in alist to filter out 
+#everything that isn't a number
+list(filter(lambda x: str(x).isdecimal(), alist))
+
 #%%
 """ITERABLES"""
 #We haven't really discussed iterables before, but we've been using them since day 1
@@ -245,6 +258,10 @@ more_words = ["where","stare","fair","chair"]
 #Notice how this returns the Cartesian product of the two lists:
 [word1 + " " + word2 for word1 in words for word2 in more_words]
 
+for word1 in words:
+    for word2 in more_words:
+        print(word1 + " " + word2)
+
 #This is because the above comprehension is essentially equivalent to the following:
 for word1 in words:
     for word2 in more_words:
@@ -263,8 +280,9 @@ names = ["Billy","Bobby","Bally","Sally"]
 
 #Finally, if you are dealing with really large datasets where you don't want to have the entire
 #object in memory at once, you can use a generator comprehension instead:
-(word1 + " " + word2 for word1, word2 in zip(words, more_words))
-
+mygen = (word1 + " " + word2 for word1, word2 in zip(words, more_words))
+for item in mygen:
+    print(item)
 #Just like the iterables above, these generators must be iterated through using a for loop, or
 #explicitly converted into a list using list()
 
@@ -303,5 +321,5 @@ def funcsort(arr):
           
 alist = [15,22,7,88,23,41,1,2,1,9,2322]
 
-print(procsort(alist))
-print(funcsort(alist))
+%timeit print(procsort(alist))
+%timeit print(funcsort(alist))
