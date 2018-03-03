@@ -1,6 +1,6 @@
 # PythonDS
 
-### Repo for Data Science &amp; Programming with Python Course
+### Repo for *Data Science &amp; Programming with Python* Course, a twice-weekly workshop I put on for my classmates during our grad program at Wake Forest University, when I was still brand new to Python!
 
 
 ### Topics:
